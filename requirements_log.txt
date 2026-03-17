@@ -1,0 +1,147 @@
+Bharat Biodiversity Intelligence UI Requirements Log
+Updated: 2026-03-18
+
+Purpose
+- Keep a running text record of platform requirements, UI decisions, prompts, and feature changes discussed during chat.
+
+Initial product direction from chat
+- Build a new React platform UI for Bharat Biodiversity Intelligence.
+- Main tabs requested:
+  Getting Started
+  Home
+  Data
+  Analysis
+  Insight
+  Attribution
+- Contact email to display in UI:
+  bharatbiodiversityintelligence@gmail.com
+
+Feature notes captured so far
+- Getting Started:
+  Introductory information on Bharat Biodiversity Intelligence.
+  Basic steps to start with data and tools.
+- Data:
+  Data store for wrangled datasets.
+  Unique public URL for datasets.
+  Data import from GBIF and iNaturalist APIs.
+  Upload option for CSV and raster files.
+  Explore future raster imports from sources such as data.gov.in and ISRO.
+- Analysis:
+  Smart CSV upload.
+  Table or map view exploration.
+  Suggest next list of tools based on uploaded data.
+  Spatial handling for raster, vector, and spatial files.
+  Prepare data with extent, resolution, and default CRS as WGS84.
+- Insight:
+  CSV-oriented biodiversity tools.
+  Species richness.
+  Diversity metrics.
+  Interaction-related outputs.
+- Attribution:
+  Explain how to cite data, workflow, and platform.
+  Follow FAIR framework principles.
+
+UI decisions completed
+- Added a cleaner top navigation layout.
+- Added Home tab.
+- Reduced text density across the page.
+- Added logo into header.
+- Increased logo size for stronger branding.
+- Added contact email in top header area.
+
+Data tab decisions completed
+- Data tab now contains two sub-tabs:
+  Import
+  Upload
+- Import sub-tab now includes GBIF API prototype functionality:
+  Search species name.
+  View matching GBIF species results.
+  Select a species result.
+  Filter occurrence records before import.
+  Fetch records from GBIF occurrence search.
+  Import fetched records into BBI workspace state.
+- Upload sub-tab currently acts as a visual placeholder for:
+  CSV upload
+  Raster upload
+  Vector/spatial file upload
+- Added workspace data library split into:
+  All Data
+  My Data
+- Added dataset preview area with toggle between:
+  Table View
+  Map View
+
+Backend repo note from chat
+- Recommendation at current stage:
+  Keep frontend and backend in the same repo while product structure and API contracts are still changing quickly.
+- Possible later change:
+  Split backend into a separate repo once services, jobs, auth, storage, and geospatial processing mature enough to justify separate ownership.
+
+Requested maintenance rule
+- Update this text file with every meaningful feature change or chat requirement so the project history stays easy to follow.
+
+Latest change summary
+- Made logo bigger.
+- Added GBIF species search flow in the Data > Import tab.
+- Added record filters for GBIF occurrence fetch.
+- Added import to workspace behavior for fetched GBIF records.
+- Added All Data and My Data dataset library views.
+- Added dataset preview toggle between Table View and Map View.
+- Added footer note in UI pointing to this requirements log.
+
+New change summary
+- Increased logo size again to roughly 2x the earlier cleaned-header version.
+- Getting Started now loads article content from:
+  public/getting-started.md
+- This markdown file is intended to be edited directly in VS Code.
+- Home tab now acts as an empty placeholder for latest data or outputs ran.
+- Added progress bar and clearer user-facing fetch/import messages in Data > Import.
+- Replaced the mock map preview with a real Leaflet map using location coordinates.
+- Cleaned Data flow so import sources are separated into:
+  GBIF
+  iNaturalist
+  data.gov.in / Bioclim
+- Added iNaturalist taxon search and observation fetch flow.
+- Added a connector-ready climate raster search surface for prepared raster and bioclim layers.
+- Kept dataset library split into All Data and My Data.
+
+Latest requested additions
+- Attribution page should list all packages and software versions used for the platform.
+- Add download and delete actions for datasets in My Data.
+- Add local upload flows with browse support for:
+  CSV
+  TIFF / TIF raster
+  SHP
+- Add map tools.
+- Fix delete behavior for imported or uploaded data.
+- Keep table and map view dimensions fixed.
+- Improve button spacing and overall precision of user experience.
+- Imported or uploaded data should be available in Analysis for further tools.
+- Analysis outputs should appear in Insight with inference and data story.
+- Make the editable Getting Started article file easier to find.
+
+Implementation completed in this pass
+- Added package and software version listing on Attribution.
+- Added working Download and Delete controls for selected datasets.
+- Added local file browse upload cards for CSV, raster, and SHP.
+- Added basic CSV parsing into workspace datasets.
+- Added metadata-first raster and shapefile registration into My Data.
+- Added map tools:
+  Zoom in
+  Zoom out
+  Fit data
+  Reset
+- Added fixed-dimension preview regions for table and map.
+- Added Analysis dataset picker using My Data.
+- Added Analysis tool cards that generate outputs for Insight.
+- Added Insight cards with summary, inference, and data story.
+- Added a visible banner showing the full editable markdown file path for Getting Started.
+- Ran a browser-level review using Playwright Chromium and captured a local screenshot for UI inspection at:
+  output/playwright/platform-review.png
+
+Latest small update
+- Increased the logo size again.
+- Added a simple mean calculation tool in Analysis:
+  Calculate mean coordinate
+- Mean output is now shown in Insight when that tool is run.
+- Dataset downloads now export as CSV instead of JSON.
