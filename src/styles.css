@@ -622,6 +622,10 @@ small {
   margin-top: 1rem;
 }
 
+.analysis-copy {
+  margin-top: 0.7rem;
+}
+
 .text-input {
   width: 100%;
   padding: 0.88rem 0.95rem;
@@ -871,6 +875,16 @@ small {
   padding: 1rem 1.1rem;
   background: rgba(255, 255, 255, 0.72);
   text-align: left;
+}
+
+.coming-soon-card {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1.2rem;
+  border: 1px dashed rgba(23, 50, 41, 0.18);
+  background: rgba(255, 251, 243, 0.76);
 }
 
 .version-card {

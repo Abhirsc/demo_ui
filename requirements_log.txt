@@ -145,3 +145,73 @@ Latest small update
   Calculate mean coordinate
 - Mean output is now shown in Insight when that tool is run.
 - Dataset downloads now export as CSV instead of JSON.
+
+Analysis repo integration note
+- Analysis now lists CSV workflow tools from:
+  https://github.com/Abhirsc/Biodiversity_metrics-csv
+- Spatial Analysis is shown separately as coming soon.
+
+Hosting architecture memo
+- Recommended deployment split:
+  Frontend UI on Vercel
+  API / Orchestrator on Render or Railway
+  Postgres for datasets, jobs, provenance, outputs, and platform memory
+  Cloudflare R2 for uploaded files, generated downloads, rasters, shapefiles, and output artifacts
+  CSV worker connected to Biodiversity_metrics-csv repo
+  Spatial worker connected to the future spatial analysis repo
+
+Architecture diagram
+- User -> Frontend UI
+- Frontend UI -> API / Orchestrator
+- Frontend UI -> Object Storage for file upload/download flow
+- API / Orchestrator -> Postgres
+- API / Orchestrator -> Object Storage
+- API / Orchestrator -> CSV Worker
+- API / Orchestrator -> Spatial Worker
+- CSV Worker -> Object Storage
+- CSV Worker -> Postgres
+- Spatial Worker -> Object Storage
+- Spatial Worker -> Postgres
+
+Flow memo
+1. User opens the React frontend.
+2. User uploads files or imports records from GBIF or iNaturalist.
+3. Files are stored in object storage.
+4. Dataset metadata and provenance are stored in Postgres.
+5. User selects a dataset in Analysis.
+6. Frontend sends a job request to the API / Orchestrator.
+7. API routes CSV jobs to the CSV worker and spatial jobs to the Spatial worker.
+8. Worker reads inputs from object storage.
+9. Worker writes outputs back to object storage.
+10. Worker writes job status, summaries, and provenance to Postgres.
+11. Frontend reads outputs and displays them in Insight.
+
+Storage split memo
+- Postgres stores:
+  users
+  datasets
+  jobs
+  outputs
+  provenance
+  citations
+  workflow state
+- Object storage stores:
+  uploaded CSV files
+  uploaded TIFF / TIF rasters
+  uploaded SHP and other spatial files
+  generated downloads
+  reports
+  output artifacts
+
+RAM recommendation memo
+- Frontend:
+  static hosting, negligible compute
+- API / Orchestrator:
+  2 GB RAM to start
+- CSV worker:
+  2 to 4 GB RAM
+- Spatial worker:
+  8 to 16 GB RAM
+- Practical rule:
+  CSV-only workflows can start at 2 to 4 GB
+  Spatial and raster processing should start around 8 GB and may need more later

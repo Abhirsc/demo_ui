@@ -83,6 +83,69 @@ const softwareVersions = [
   { name: 'Markdown source', version: 'public/getting-started.md' },
 ];
 
+const csvWorkflowTools = [
+  {
+    id: 'occurrence_coordinate_cleaning',
+    label: 'Occurrence Coordinate Cleaning',
+    description: 'Flag bad coordinates, duplicates, centroids, institution points, sea points, zeros, and outliers.',
+  },
+  {
+    id: 'occurrence_range_mapping',
+    label: 'Occurrence Range Mapping',
+    description: 'Build occurrence maps and estimate range polygons from coordinates.',
+  },
+  {
+    id: 'red_list_spatial_metrics',
+    label: 'Red List Spatial Metrics',
+    description: 'Compute IUCN-style spatial metrics such as EOO and AOO.',
+  },
+  {
+    id: 'species_richness',
+    label: 'Species Richness',
+    description: 'Count unique species and summarize richness from occurrence records.',
+  },
+  {
+    id: 'community_rarefaction_diversity',
+    label: 'Community Rarefaction Diversity',
+    description: 'Rarefaction, extrapolation, Hill numbers, and sample coverage workflows.',
+  },
+  {
+    id: 'community_ordination_beta_diversity',
+    label: 'Community Ordination Beta Diversity',
+    description: 'Ordination and diversity analysis on community matrices.',
+  },
+  {
+    id: 'functional_diversity_traits',
+    label: 'Functional Diversity Traits',
+    description: 'FRic, FDiv, FEve, FDis, and Rao’s Q from trait tables.',
+  },
+  {
+    id: 'phylogenetic_diversity_endemism',
+    label: 'Phylogenetic Diversity Endemism',
+    description: 'Phylogenetic diversity, endemism, beta diversity, and prioritization workflows.',
+  },
+  {
+    id: 'camera_trap_overview_mapping',
+    label: 'Camera Trap Overview Mapping',
+    description: 'Species overviews, relative abundance, effort summaries, and mapped deployments.',
+  },
+  {
+    id: 'camera_trap_occupancy_prep',
+    label: 'Camera Trap Occupancy Prep',
+    description: 'Prepare occupancy or spatial capture-recapture inputs from record tables.',
+  },
+  {
+    id: 'acoustic_detection_postprocessing',
+    label: 'Acoustic Detection Postprocessing',
+    description: 'Filter, validate, threshold, and visualize BirdNET detection CSVs.',
+  },
+  {
+    id: 'acoustic_index_summary',
+    label: 'Acoustic Index Summary',
+    description: 'Summarize per-file acoustic index CSV outputs for biodiversity reporting.',
+  },
+];
+
 const starterDatasets = [
   {
     id: 'seed-1',
@@ -1189,13 +1252,23 @@ function App() {
                 <article className="workspace-card">
                   <span className="section-tag">Suggested tools</span>
                   <h3>Choose the next processing step</h3>
-                    <div className="tool-grid">
-                    {['Calculate mean coordinate', 'Check data quality', 'Generate biodiversity summary'].map((tool) => (
-                      <button key={tool} type="button" className="tool-card" onClick={() => runAnalysis(tool)} disabled={!analysisDataset}>
-                        <strong>{tool}</strong>
-                        <span>Send output to Insight with summary, inference, and data story.</span>
+                  <p className="analysis-copy">CSV tools are sourced from `Biodiversity_metrics-csv`. Spatial Analysis will be connected from a separate repo later.</p>
+                  <div className="tool-grid">
+                    <button type="button" className="tool-card" onClick={() => runAnalysis('Calculate mean coordinate')} disabled={!analysisDataset}>
+                      <strong>Calculate Mean Coordinate</strong>
+                      <span>Simple built-in summary for mapped datasets already in this platform.</span>
+                    </button>
+                    {csvWorkflowTools.map((tool) => (
+                      <button key={tool.id} type="button" className="tool-card" onClick={() => runAnalysis(tool.label)} disabled={!analysisDataset}>
+                        <strong>{tool.label}</strong>
+                        <span>{tool.description}</span>
                       </button>
                     ))}
+                  </div>
+                  <div className="coming-soon-card">
+                    <span className="section-tag">Spatial Analysis</span>
+                    <strong>Coming soon</strong>
+                    <p>Raster, vector, extent, CRS, and other spatial workflows will be connected from the second analysis repo.</p>
                   </div>
                 </article>
               </div>
